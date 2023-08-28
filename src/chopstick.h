@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 typedef struct {
-    pthread_mutex_t lock;
+    pthread_spinlock_t lock;
 } Chopstick;
 
 void init_chopstick(Chopstick* chopstick);
