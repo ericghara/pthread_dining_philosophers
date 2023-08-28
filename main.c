@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "src/philosopher.h"
-#include "src/chopstick.h"
+#include "philosopher.h"
+#include "chopstick.h"
+#include
 
 unsigned long num_philosophers;
 unsigned long max_bites;
 Philosopher* pPhilosophers;
 Chopstick* pChopsticks;
 pthread_t* pPthreads;
+
 
 void setup() {
     pPhilosophers = malloc(num_philosophers * sizeof(Philosopher));
