@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "philosopher.h"
 #include "chopstick.h"
-#include
+
+typedef struct timespec timespec;
 
 unsigned long num_philosophers;
 unsigned long max_bites;
+timespec start_time;
 Philosopher* pPhilosophers;
 Chopstick* pChopsticks;
 pthread_t* pPthreads;
@@ -22,7 +25,27 @@ void setup() {
     }
 }
 
+void print_time_diff() {
+    timespec end_time;
+    int s = clock_gettime(CLOCK_MONOTONIC,&end_time);
+    if (s != 0) {
+        fprintf(stderr, "Unable to get start time.  Error: %d\n", s);
+        exit(s);
+    }
+    end_time.tv_sec -= start_time.tv_sec;
+    end_time.tv_nsec -= start_time.tv_sec;
+    double secs = (double) end_time.tv_sec;
+    secs += (double) end_time.tv_nsec / 10000000000;
+    printf("Time Elapsed: %f\n", secs);
+}
+
 void run() {
+    // start timing
+    int s = clock_gettime(CLOCK_MONOTONIC,&start_time);
+    if (s != 0) {
+        fprintf(stderr, "Unable to get start time.  Error: %d\n", s);
+        exit(s);
+    }
     for (unsigned long i = 0; i < num_philosophers; i++) {
         int s = pthread_create(&pPthreads[i], NULL, eat,  &pPhilosophers[i]);
         if (s != 0) {
@@ -38,6 +61,7 @@ void run() {
         }
         printf("Philosopher %lu took %u bites.\n", i, pPhilosophers[i].bites_taken);
     }
+    print_time_diff();
 }
 
 void teardown() {
