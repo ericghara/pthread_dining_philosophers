@@ -47,14 +47,14 @@ void run() {
         exit(s);
     }
     for (unsigned long i = 0; i < num_philosophers; i++) {
-        int s = pthread_create(&pPthreads[i], NULL, eat,  &pPhilosophers[i]);
+        s = pthread_create(&pPthreads[i], NULL, eat,  &pPhilosophers[i]);
         if (s != 0) {
             fprintf(stderr, "Unable to create philosopher: %lu, err: %d\n", i, s);
             exit(s);
         }
     }
     for (unsigned long i = 0; i < num_philosophers; i++) {
-        int s = pthread_join(pPthreads[i], NULL);
+        s = pthread_join(pPthreads[i], NULL);
         if (s != 0) {
             fprintf(stderr, "Unable to join thread for philosopher %lu.\n", i);
             exit(s);
