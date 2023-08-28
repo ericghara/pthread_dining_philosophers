@@ -33,7 +33,7 @@ void print_time_diff() {
         exit(s);
     }
     end_time.tv_sec -= start_time.tv_sec;
-    end_time.tv_nsec -= start_time.tv_sec;
+    end_time.tv_nsec -= start_time.tv_nsec;
     double secs = (double) end_time.tv_sec;
     secs += (double) end_time.tv_nsec / 10000000000;
     printf("Time Elapsed: %f\n", secs);
